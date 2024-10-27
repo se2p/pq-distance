@@ -1,8 +1,14 @@
 {
   "name": "@se2p/pq-distance",
   "version": "1.0.0",
-  "main": "index.js",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "exports": ["./dist/index.js"],
+  "types": "dist/index.d.ts",
   "scripts": {
+    "build": "rm -rf dist && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
