@@ -5,8 +5,17 @@
     "dist"
   ],
   "main": "dist/index.js",
-  "exports": ["./dist/index.js"],
+  "exports": [
+    "./dist/index.js"
+  ],
   "types": "dist/index.d.ts",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/se2p/pq-distance.git"
+  },
   "scripts": {
     "build": "rm -rf dist && tsc",
     "lint": "eslint src",
