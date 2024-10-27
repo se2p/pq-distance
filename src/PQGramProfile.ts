@@ -2,6 +2,29 @@ import {Register} from "./Register";
 import {requirePositiveInteger} from "./util";
 
 /**
+ * Represents a tree.
+ */
+export interface PQTree<T> {
+
+    /**
+     * The tree's root node.
+     */
+    root: T;
+
+    /**
+     * Retrieves the label from the given node.
+     * @param node The node from which to retrieve the label.
+     */
+    getLabel: (node: T) => string;
+
+    /**
+     * Returns the given node's child nodes.
+     * @param node The node whose children to return.
+     */
+    getChildren: (node: T) => readonly T[];
+}
+
+/**
  * Implements a pq-gram profile, which behaves like a bag of labelled tuples ("registers").
  */
 export class PQGramProfile {
@@ -77,5 +100,44 @@ export class PQGramProfile {
         }
 
         return sum;
+    }
+
+    /**
+     * Computes the pq-gram profile of the given tree, using the specified p and q values.
+     * @param tree The tree for which to compute the profile.
+     * @param p The p value to use.
+     * @param q The q value to use.
+     */
+    static of<T>(tree: PQTree<T>, p: number, q: number): PQGramProfile {
+        requirePositiveInteger(p, q);
+
+        const profile = new PQGramProfile(p + q);
+        const workQueue: [T, Register][] = [[tree.root, new Register(p)]];
+
+        while (workQueue.length > 0) {
+            const [r, _anc] = workQueue.shift()!;
+            const anc = _anc.shift(tree.getLabel(r));
+            let sib = new Register(q);
+
+            const children = tree.getChildren(r);
+
+            if (children.length === 0) {
+                profile.add(anc.concat(sib));
+                continue;
+            }
+
+            for (const c of children) {
+                sib = sib.shift(tree.getLabel(c));
+                profile.add(anc.concat(sib));
+                workQueue.push([c, anc]);
+            }
+
+            for (let k = 0; k < q - 1; k++) {
+                sib = sib.shift();
+                profile.add(anc.concat(sib));
+            }
+        }
+
+        return profile;
     }
 }
