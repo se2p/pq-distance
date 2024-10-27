@@ -1,0 +1,15 @@
+{
+  "name": "@se2p/pq-distance",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Sebastian Schweikl",
+    "email": "schweikl@fim.uni-passau.de"
+  },
+  "license": "LGPL-3.0-only",
+  "description": "Approximate computation of tree-edit distance"
+}
