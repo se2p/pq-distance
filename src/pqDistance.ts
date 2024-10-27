@@ -13,7 +13,7 @@ export interface PQOpts {
  * @param t2 Another tree
  * @param opts Custom p and q values, optional
  */
-export function pqDistance<T, U>(t1: Tree<T>, t2: Tree<U>, opts: Partial<PQOpts> = {}): number {
+export function pqDistance<T, U>(t1: PQTree<T>, t2: PQTree<U>, opts: Partial<PQOpts> = {}): number {
     const {p, q} = {
         p: 2,
         q: 3,
