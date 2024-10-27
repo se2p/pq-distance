@@ -1,6 +1,6 @@
 import {PQGramProfile} from "../src/PQGramProfile";
 import {Register} from "../src/Register";
-import {newPQGramProfile} from "./util";
+import {newPQGramProfile, node, tree} from "./util";
 
 describe("A pq-gram profile", () => {
     describe("that is newly constructed", () => {
@@ -134,6 +134,33 @@ describe("A pq-gram profile", () => {
 
                 expect(p.intersect(q)).toBe(9);
             });
+        });
+    });
+
+
+    test("it should have length 13 for our example tree", () => {
+        const t =
+            tree(
+                node("a",
+                    node("a",
+                        node("e"),
+                        node("b")
+                    ),
+                    node("b"),
+                    node("c")),
+            );
+        const p = 2;
+        const q = 3;
+        expect(PQGramProfile.of(t, p, q)).toHaveLength(13);
+    });
+
+    describe.each([0, -1, 1.1234])("should throw", (i) => {
+        it(`for invalid p of ${i}`, () => {
+            expect(() => PQGramProfile.of(tree(node("a")), i, 3)).toThrow();
+        });
+
+        it(`for invalid q of ${i}`, () => {
+            expect(() => PQGramProfile.of(tree(node("a")), 2, i)).toThrow();
         });
     });
 });
