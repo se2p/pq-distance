@@ -11,5 +11,8 @@
     "email": "schweikl@fim.uni-passau.de"
   },
   "license": "LGPL-3.0-only",
-  "description": "Approximate computation of tree-edit distance"
+  "description": "Approximate computation of tree-edit distance",
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
 }
