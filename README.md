@@ -7,18 +7,10 @@ on the academic paper [^1][^2]. Implementation ported from LitterBox[^3]. Node.j
 
 ## Installation
 
-The package can be installed as `@se2p/pq-distance` from GitHub's npm registry using `npm` or similar. To this,
-add the `--registry=https://npm.pkg.github.com` flag during installation:
+The package can be installed as `@se2p/pq-distance` from npm:
 
 ```bash
-npm install @se2p/pq-distance --registry=https://npm.pkg.github.com   
-```
-
-To permanently use GitHub's npm registry for all packages of the `@se2p` scope, you may want to update your
-project-level or global `.npmrc`. For example:
-
-```bash
-echo '@se2p:registry=https://npm.pkg.github.com' >> ~/.npmrc
+npm install @se2p/pq-distance
 ```
 
 ## Usage
