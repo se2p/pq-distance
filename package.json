@@ -1,6 +1,6 @@
 {
   "name": "@se2p/pq-distance",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "files": [
     "dist"
   ],
@@ -9,9 +9,6 @@
     "./dist/index.js"
   ],
   "types": "dist/index.d.ts",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/se2p/pq-distance.git"
