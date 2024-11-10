@@ -23,7 +23,7 @@ describe("A pq-gram profile", () => {
         it("should increase its length by 1", () => {
             const registerLength = 1;
             const p = new PQGramProfile(registerLength);
-            p.add(new Register(registerLength));
+            p.add(Register.ofLength(registerLength));
             expect(p).toHaveLength(1);
         });
 
@@ -31,7 +31,7 @@ describe("A pq-gram profile", () => {
             const registerLength = 1;
             const p = new PQGramProfile(registerLength);
             const times = 5;
-            const r = new Register(registerLength);
+            const r = Register.ofLength(registerLength);
             for (let i = 0; i < times; i++) {
                 p.add(r);
             }
@@ -40,7 +40,7 @@ describe("A pq-gram profile", () => {
 
         it("should throw if the register's length is incompatible", () => {
             const p = new PQGramProfile(1);
-            const r = new Register(2);
+            const r = Register.ofLength(2);
             expect(() => p.add(r)).toThrow();
         });
     });
@@ -50,7 +50,7 @@ describe("A pq-gram profile", () => {
             const registerLength = 1;
             const p = new PQGramProfile(registerLength);
             for (let i = 0; i < 5; i++) {
-                p.add(new Register(1));
+                p.add(Register.ofLength(1));
             }
             const q = new PQGramProfile(registerLength);
             expect(p.intersect(q)).toBe(0);
@@ -61,12 +61,12 @@ describe("A pq-gram profile", () => {
             const registerLength = 1;
             const p = new PQGramProfile(registerLength);
             for (let i = 0; i < 5; i++) {
-                p.add(new Register(registerLength));
+                p.add(Register.ofLength(registerLength));
             }
 
             const q = new PQGramProfile(registerLength);
             for (let i = 0; i < 3; i++) {
-                q.add(new Register(registerLength));
+                q.add(Register.ofLength(registerLength));
             }
 
             const before = {

@@ -4,17 +4,17 @@ import {newRegister} from "./util";
 describe("A register", () => {
     describe("that is newly constructed", () => {
         it.each([0, -1, 1.1234])("should throw an error for invalid size %d", (i) => {
-            expect(() => new Register(i)).toThrow();
+            expect(() => Register.ofLength(i)).toThrow();
         });
 
         it("should have the specified size", () => {
             const length = 42;
-            expect(new Register(42)).toHaveLength(length);
+            expect(Register.ofLength(42)).toHaveLength(length);
         });
 
         it("should be empty", () => {
             const length = 5;
-            const r = new Register(length);
+            const r = Register.ofLength(length);
             const actual = r.toJSON();
             const expected = Array(length).fill(null);
             expect(actual).toStrictEqual(expected);
@@ -23,29 +23,29 @@ describe("A register", () => {
 
     describe("that is serialized", () => {
         it("should return a fresh object", () => {
-            const r = new Register(5);
+            const r = Register.ofLength(5);
             const j = r.toJSON();
             const k = r.toJSON();
             expect(j).not.toBe(k);
         });
 
         it("should result in an array with the labels", () => {
-            const r = new Register(3).shift("foo").shift("bar");
+            const r = Register.ofLength(3).shift("foo").shift("bar");
             expect(r.toJSON()).toStrictEqual([null, "foo", "bar"]);
         });
     });
 
     describe("that is shifted", () => {
         it("should not modify the callee object", () => {
-            const r = new Register(5);
+            const r = Register.ofLength(5);
             const before = r.toJSON();
             r.shift("foo");
             const after = r.toJSON();
             expect(before).toStrictEqual(after);
         });
 
-        it("should result in a new register with the given label appended", () => {
-            const r = new Register(2);
+        it("should result in a new Register with the given label appended", () => {
+            const r = Register.ofLength(2);
             const t = r.shift("foo");
             expect(r).not.toBe(t);
             expect(t.toJSON()).toStrictEqual([null, "foo"]);
@@ -63,17 +63,17 @@ describe("A register", () => {
     });
 
     describe("that is concatenated with another register", () => {
-        it("should return a new register", () => {
-            const r = new Register(1);
-            const s = new Register(2);
+        it("should return a new Register", () => {
+            const r = Register.ofLength(1);
+            const s = Register.ofLength(2);
             const t = r.concat(s);
             expect(t).not.toBe(r);
             expect(t).not.toBe(s);
         });
 
         it("should return a register of the correct length", () => {
-            const r = new Register(1);
-            const s = new Register(2);
+            const r = Register.ofLength(1);
+            const s = Register.ofLength(2);
             const t = r.concat(s);
             expect(t).toHaveLength(r.length + s.length);
         });

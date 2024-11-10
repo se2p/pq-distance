@@ -18,7 +18,7 @@
     "lint": "eslint src",
     "test": "jest"
   },
-  "keywords": [],
+  "keywords": ["tree-edit distance", "approximation"],
   "author": {
     "name": "Sebastian Schweikl",
     "email": "schweikl@fim.uni-passau.de"
