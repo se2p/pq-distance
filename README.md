@@ -1,5 +1,6 @@
 # pq-distance: Approximate Tree-Edit Distance for Node.js
 
+[![npm version](https://badge.fury.io/js/@se2p%2Fpq-distance.svg)](https://www.npmjs.com/package/@se2p/pq-distance) 
 ![CI status](https://github.com/se2p/pq-distance/actions/workflows/ci.yml/badge.svg?branch=main)
 
 Modern TypeScript implementation of pq-gram distance, an efficient approximation for tree-edit distance. Algorithm based
