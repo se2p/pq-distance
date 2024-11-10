@@ -112,12 +112,12 @@ export class PQGramProfile {
         requirePositiveInteger(p, q);
 
         const profile = new PQGramProfile(p + q);
-        const workQueue: [T, Register][] = [[tree.root, new Register(p)]];
+        const workQueue: [T, Register][] = [[tree.root, Register.ofLength(p)]];
 
         while (workQueue.length > 0) {
             const [r, _anc] = workQueue.shift()!;
             const anc = _anc.shift(tree.getLabel(r));
-            let sib = new Register(q);
+            let sib = Register.ofLength(q);
 
             const children = tree.getChildren(r);
 

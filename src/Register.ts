@@ -10,7 +10,10 @@ const NIL = Symbol("*");
  */
 type Label = string | typeof NIL;
 
-class _Register {
+/**
+ * A fixed-length shift register of labels.
+ */
+export class Register {
 
     /**
      * Current labels stored by the register.
@@ -23,7 +26,7 @@ class _Register {
      * @param contents The labels with which the register is initially filled.
      * @protected
      */
-    protected constructor(contents: Label[]) {
+    private constructor(contents: Label[]) {
         if (contents.length === 0) {
             throw new Error("empty contents");
         }
@@ -48,7 +51,7 @@ class _Register {
         const contents = [...this._contents];
         contents.push(label);
         contents.shift();
-        return new _Register(contents);
+        return new Register(contents);
     }
 
     /**
@@ -57,7 +60,7 @@ class _Register {
      * @param that The other register to concatenate with.
      */
     concat(that: Register): Register {
-        return new _Register([...this._contents, ...that._contents]);
+        return new Register([...this._contents, ...that._contents]);
     }
 
     /**
@@ -66,19 +69,13 @@ class _Register {
     toJSON(): (string | null)[] {
         return this._contents.map((l) => l === NIL ? null : l);
     }
-}
-
-/**
- * A fixed-length shift register of labels.
- */
-export class Register extends _Register {
 
     /**
      * Constructs a new, initially empty shift register which can hold the given fixed number of labels.
      * @param n The fixed length of the register.
      */
-    constructor(n: number) {
+    static ofLength(n: number) {
         requirePositiveInteger(n);
-        super(Array<Label>(n).fill(NIL));
+        return new Register(Array<Label>(n).fill(NIL));
     }
 }

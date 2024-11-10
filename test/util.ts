@@ -4,7 +4,7 @@ import {PQGramProfile, PQTree} from "../src/PQGramProfile";
 export function newRegister(r: Register | number, ...contents: (string | null)[]): Register {
     return contents.reduce(
         (r, l) => l === null ? r.shift() : r.shift(l),
-        typeof r === "number" ? new Register(r) : r);
+        typeof r === "number" ? Register.ofLength(r) : r);
 }
 
 export function newPQGramProfile(registerLength: number, contents: (string | null)[][]): PQGramProfile {
