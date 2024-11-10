@@ -27,10 +27,6 @@ export class Register {
      * @protected
      */
     private constructor(contents: Label[]) {
-        if (contents.length === 0) {
-            throw new Error("empty contents");
-        }
-
         this._contents = contents;
     }
 
