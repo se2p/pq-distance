@@ -1,5 +1,5 @@
-import {Register} from "./Register";
-import {requirePositiveInteger} from "./util";
+import { Register } from "./Register";
+import { requirePositiveInteger } from "./util";
 
 /**
  * Represents a tree.
@@ -137,6 +137,47 @@ export class PQGramProfile {
                 profile.add(anc.concat(sib));
             }
         }
+
+        return profile;
+    }
+
+    static windowed<T>(tree: PQTree<T>, p: number, w: number): PQGramProfile {
+        const dummies = Register.ofLength(2)
+        const stem = Register.ofLength(p);
+        const profile = new PQGramProfile(p + dummies.length);
+
+        function recurse(node: T, stem: Register): void {
+            stem = stem.shift(tree.getLabel(node));
+            const children = tree.getChildren(node);
+
+            if (children.length === 0) { // Leaf node
+                profile.add(stem.concat(dummies));
+                return;
+            }
+
+            for (const c of children) {
+                recurse(c, stem);
+            }
+
+            const labels: (string | undefined)[] = children
+                .map((c) => tree.getLabel(c))
+                .sort();
+
+            while (labels.length < w) {
+                labels.push(undefined); // Dummy labels
+            }
+
+            for (let i = 0; i < w; i++) {
+                for (let j = i + 1; j < i + w; j++) {
+                    const r = Register.ofLength(2)
+                        .shift(labels[i])
+                        .shift(labels[j % w]);
+                    profile.add(stem.concat(r));
+                }
+            }
+        }
+
+        recurse(tree.root, stem);
 
         return profile;
     }
