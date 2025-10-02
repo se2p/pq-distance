@@ -70,7 +70,7 @@ describe("the pq-distance", () => {
         });
 
         test(`for invalid q of ${i}`, () => {
-            expect(() => pqDistance(t1, t2, {p: i})).toThrow();
+            expect(() => pqDistance(t1, t2, { q: i })).toThrow();
         });
     });
 
@@ -98,7 +98,6 @@ describe("the pq-distance", () => {
         });
 
         test("p=2 and q=3 if not explicitly specified", () => {
-            const pqGramProfileOf = jest.spyOn(PQGramProfile, "of");
             pqDistance(t1, t2);
             expect(pqGramProfileOf).toHaveBeenCalledWith(expect.anything(), 2, 3);
             expect(pqGramProfileOf).toHaveBeenCalledTimes(2);
