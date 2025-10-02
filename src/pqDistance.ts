@@ -24,8 +24,7 @@ export function pqDistance<T, U>(t1: PQTree<T>, t2: PQTree<U>, opts: Partial<PQO
 
     const p1 = PQGramProfile.of(t1, p, q);
     const p2 = PQGramProfile.of(t2, p, q);
-
-    return 1 - 2 * (p1.intersect(p2) / (p1.length + p2.length));
+    return p1.distanceTo(p2);
 }
 
 export interface PQWindowedOpts {
@@ -52,6 +51,5 @@ export function pqDistanceWindowed<T, U>(
 
     const p1 = PQGramProfile.windowed(t1, p, w);
     const p2 = PQGramProfile.windowed(t2, p, w);
-
-    return 1 - 2 * (p1.intersect(p2) / (p1.length + p2.length));
+    return p1.distanceTo(p2);
 }

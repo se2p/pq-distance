@@ -102,6 +102,10 @@ export class PQGramProfile {
         return sum;
     }
 
+    distanceTo(that: PQGramProfile): number {
+        return 1 - 2 * (this.intersect(that) / (this.length + that.length));
+    }
+
     /**
      * Computes the pq-gram profile of the given tree, using the specified p and q values.
      * @param tree The tree for which to compute the profile.
