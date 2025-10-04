@@ -1,17 +1,13 @@
-import {Register} from "../src/Register";
-import {PQGramProfile, PQTree} from "../src/PQGramProfile";
+import { Register } from "../src/Register";
+import { PQGramProfile, PQTree } from "../src/PQGramProfile";
 
-export function newRegister(r: Register | number, ...contents: (string | null)[]): Register {
+export function newRegister(r: Register | number, ...contents: (string | undefined)[]): Register {
     return contents.reduce(
-        (r, l) => l === null ? r.shift() : r.shift(l),
+        (r, l) => r.shift(l),
         typeof r === "number" ? Register.ofLength(r) : r);
 }
 
-export function newPQGramProfile(registerLength: number, contents: (string | null)[][]): PQGramProfile {
-    if (contents.length === 0) {
-        throw new Error("Empty contents");
-    }
-
+export function newPQGramProfile(registerLength: number, contents: (string | undefined)[][]): PQGramProfile {
     const p = new PQGramProfile(registerLength);
     const registers = contents.map((c) => newRegister(c.length, ...c));
     registers.forEach((r) => p.add(r));

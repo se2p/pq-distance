@@ -57,7 +57,7 @@ describe("A register", () => {
         });
 
         it("should append NIL when not given a label", () => {
-            const r = newRegister(3, 'a', 'b', 'c', null);
+            const r = newRegister(3, 'a', 'b', 'c', undefined);
             expect(r.toJSON()).toStrictEqual(['b', 'c', null]);
         });
     });

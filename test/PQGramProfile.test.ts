@@ -114,7 +114,7 @@ describe("A pq-gram profile", () => {
                     ['a', 'c', '*', '*', '*'],
                     ['*', 'a', 'b', 'c', '*'],
                     ['*', 'a', 'c', '*', '*'],
-                ].map((r) => r.map((c) => c === '*' ? null : c)));
+                ].map((r) => r.map((c) => c === '*' ? undefined : c)));
 
                 const q = newPQGramProfile(5, [
                     ['*', 'a', '*', '*', 'a'],
@@ -130,7 +130,7 @@ describe("A pq-gram profile", () => {
                     ['a', 'x', '*', '*', '*'],
                     ['*', 'a', 'b', 'x', '*'],
                     ['*', 'a', 'x', '*', '*'],
-                ].map((r) => r.map((c) => c === '*' ? null : c)));
+                ].map((r) => r.map((c) => c === '*' ? undefined : c)));
 
                 expect(p.intersect(q)).toBe(9);
             });
