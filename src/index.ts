@@ -1,2 +1,2 @@
-export {PQOpts, pqDistance} from "./pqDistance"
-export {PQTree} from "./PQGramProfile"
+export { PQOpts, PQWindowedOpts, pqDistance, pqDistanceWindowed } from "./pqDistance"
+export { PQTree } from "./PQGramProfile"
