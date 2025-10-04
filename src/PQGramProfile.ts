@@ -147,20 +147,21 @@ export class PQGramProfile {
 
     static windowed<T>(tree: PQTree<T>, p: number, w: number): PQGramProfile {
         const dummies = Register.ofLength(2)
-        const stem = Register.ofLength(p);
         const profile = new PQGramProfile(p + dummies.length);
+        const workQueue: [T, Register][] = [[tree.root, Register.ofLength(p)]];
 
-        function recurse(node: T, stem: Register): void {
-            stem = stem.shift(tree.getLabel(node));
+        while (workQueue.length > 0) {
+            const [node, _stem] = workQueue.shift()!;
+            const stem = _stem.shift(tree.getLabel(node));
             const children = tree.getChildren(node);
 
             if (children.length === 0) { // Leaf node
                 profile.add(stem.concat(dummies));
-                return;
+                continue;
             }
 
             for (const c of children) {
-                recurse(c, stem);
+                workQueue.push([c, stem]);
             }
 
             const labels: (string | undefined)[] = children
@@ -180,8 +181,6 @@ export class PQGramProfile {
                 }
             }
         }
-
-        recurse(tree.root, stem);
 
         return profile;
     }
