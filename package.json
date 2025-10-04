@@ -1,6 +1,6 @@
 {
   "name": "@se2p/pq-distance",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "files": [
     "dist"
   ],
@@ -18,7 +18,10 @@
     "lint": "eslint src",
     "test": "jest"
   },
-  "keywords": ["tree-edit distance", "approximation"],
+  "keywords": [
+    "tree-edit distance",
+    "approximation"
+  ],
   "author": {
     "name": "Sebastian Schweikl",
     "email": "schweikl@fim.uni-passau.de"
