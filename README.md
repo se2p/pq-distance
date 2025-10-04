@@ -4,7 +4,7 @@
 ![CI status](https://github.com/se2p/pq-distance/actions/workflows/ci.yml/badge.svg?branch=main)
 
 Modern TypeScript implementation of pq-gram distance, an efficient approximation for tree-edit distance. Algorithm based
-on the academic paper [^1][^2]. Implementation ported from LitterBox[^3]. Node.js API inspired by jqgram[^4].
+on academic papers[^1][^2] and thesis[^5]. Implementation ported from LitterBox[^3]. Node.js API inspired by jqgram[^4].
 
 ## Installation
 
@@ -16,16 +16,16 @@ npm install @se2p/pq-distance
 
 ## Usage
 
-The package exports a single function `pqDistance`:
+The package exports two functions function `pqDistance` and `pqDistanceWindowed`:
 
 ```javascript
-const {pqDistance} = require("@se2p/pq-distance");
+const {pqDistance, pqDistanceWindowed} = require("@se2p/pq-distance");
 ```
 
-TypeScript users can also import the `PQTree` and `PQOpts` types:
+TypeScript users can also import the `PQTree`, `PQOpts` and `PQWindowedOpts` types:
 
 ```typescript
-import {pqDistance, PQTree, PQOpts} from "@se2p/pq-distance";
+import {pqDistance, pqDistanceWindowed, PQTree, PQOpts, PQWindowedOpts} from "@se2p/pq-distance";
 ```
 
 Example trees:
@@ -110,8 +110,16 @@ const opts: PQOpts = {p: 2, q: 3}; // default values
 pqDistance(tree1, tree2, opts); // 0.3076923076923077
 ```
 
-The object `opts` sets the `p` and `q` values for distance computation, and may be omitted to use the default values
-`p=2` and `q=3`. Please refer to the academic paper how they affect the distance value.
+The use is analogous for the windowed pq-gram distance:
+
+```typescript
+const opts: PQWindowedOpts = {p: 2, w: 3}; // default values 
+pqDistanceWindowed(tree1, tree2, opts); // 0.3125
+```
+
+The object `opts` sets the `p` and `q` values for `pqDistance`, and may be omitted to use the default values
+`p=2` and `q=3`. In case of `pqDistanceWindowed`, you must use `w` instead of `q`. The default values are
+`p=2` and `w=3`. Please refer to the academic papers how they affect the distance value.
 
 ## License
 
@@ -129,3 +137,4 @@ warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Gen
 [^2]: https://github.com/DatabaseGroup/apted
 [^3]: https://github.com/se2p/LitterBox
 [^4]: https://github.com/hoonto/jqgram
+[^5]: https://vbn.aau.dk/en/publications/approximate-matching-of-hierarchial-data
