@@ -1,5 +1,5 @@
-import {Register} from "./Register";
-import {requirePositiveInteger} from "./util";
+import { Register } from "./Register";
+import { requirePositiveInteger } from "./util";
 
 /**
  * Represents a tree.
@@ -102,6 +102,10 @@ export class PQGramProfile {
         return sum;
     }
 
+    distanceTo(that: PQGramProfile): number {
+        return 1 - 2 * (this.intersect(that) / (this.length + that.length));
+    }
+
     /**
      * Computes the pq-gram profile of the given tree, using the specified p and q values.
      * @param tree The tree for which to compute the profile.
@@ -135,6 +139,46 @@ export class PQGramProfile {
             for (let k = 0; k < q - 1; k++) {
                 sib = sib.shift();
                 profile.add(anc.concat(sib));
+            }
+        }
+
+        return profile;
+    }
+
+    static windowed<T>(tree: PQTree<T>, p: number, w: number): PQGramProfile {
+        const dummies = Register.ofLength(2)
+        const profile = new PQGramProfile(p + dummies.length);
+        const workQueue: [T, Register][] = [[tree.root, Register.ofLength(p)]];
+
+        while (workQueue.length > 0) {
+            const [node, _stem] = workQueue.shift()!;
+            const stem = _stem.shift(tree.getLabel(node));
+            const children = tree.getChildren(node);
+
+            if (children.length === 0) { // Leaf node
+                profile.add(stem.concat(dummies));
+                continue;
+            }
+
+            for (const c of children) {
+                workQueue.push([c, stem]);
+            }
+
+            const labels: (string | undefined)[] = children
+                .map((c) => tree.getLabel(c))
+                .sort();
+
+            while (labels.length < w) {
+                labels.push(undefined); // Dummy labels
+            }
+
+            for (let i = 0; i < w; i++) {
+                for (let j = i + 1; j < i + w; j++) {
+                    const r = Register.ofLength(2)
+                        .shift(labels[i])
+                        .shift(labels[j % w]);
+                    profile.add(stem.concat(r));
+                }
             }
         }
 
